@@ -1648,13 +1648,18 @@ I want you to know that...
         };
 
         // Initialize on page load
+       // Initialize on page load
         window.onload = function() {
             createHearts();
             initProgressDots();
             calculateDaysTogether();
-            viewedScreens.add('entry');
             
-            // Show the music player, progress tracker, and days counter on initial load (entry screen)
+            // Only show entry screen initially
+            const entryScreen = document.getElementById('entry');
+            entryScreen.style.display = 'block';
+            entryScreen.classList.add('active');
+            
+            // Show the music player, progress tracker, and days counter only on entry screen
             document.querySelector('.music-player').classList.add('show');
             document.querySelector('.progress-tracker').classList.add('show');
             document.querySelector('.days-counter').classList.add('show');
@@ -1753,6 +1758,18 @@ I want you to know that...
         function answerYes() {
             createConfetti();
             createFireworks();
+            
+            // Completely hide the entry screen and its elements
+            const entryScreen = document.getElementById('entry');
+            entryScreen.classList.remove('active');
+            entryScreen.style.display = 'none';
+            
+            // Hide the music player, progress tracker, and days counter
+            document.querySelector('.music-player').classList.remove('show');
+            document.querySelector('.progress-tracker').classList.remove('show');
+            document.querySelector('.days-counter').classList.remove('show');
+            
+            // Show the welcome screen
             setTimeout(() => {
                 showScreen('welcome');
             }, 1500);
@@ -1770,23 +1787,6 @@ I want you to know that...
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
-            
-            // Show/hide the music player, progress tracker, and days counter based on screen
-            const musicPlayer = document.querySelector('.music-player');
-            const progressTracker = document.querySelector('.progress-tracker');
-            const daysCounter = document.querySelector('.days-counter');
-            
-            if (screenId === 'entry') {
-                // Show these elements only on entry screen
-                musicPlayer.classList.add('show');
-                progressTracker.classList.add('show');
-                daysCounter.classList.add('show');
-            } else {
-                // Hide these elements on all other screens
-                musicPlayer.classList.remove('show');
-                progressTracker.classList.remove('show');
-                daysCounter.classList.remove('show');
-            }
             
             // Show requested screen
             const screen = document.getElementById(screenId);
