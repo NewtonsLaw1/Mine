@@ -69,10 +69,14 @@
             padding: 15px 20px;
             border-radius: 50px;
             box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
-            display: flex;
+            display: none;
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
+        }
+
+        .music-player.show {
+            display: flex;
         }
 
         .music-player:hover {
@@ -116,6 +120,11 @@
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
             min-width: 200px;
+            display: none;
+        }
+
+        .progress-tracker.show {
+            display: block;
         }
 
         .progress-tracker-title {
@@ -169,6 +178,11 @@
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
             text-align: center;
+            display: none;
+        }
+
+        .days-counter.show {
+            display: block;
         }
 
         .days-number {
@@ -1152,7 +1166,7 @@
             .container { padding: 100px 15px 60px 15px; }
             .screen { padding: 35px 25px; }
             
-            .music-player, .progress-tracker, .days-counter {
+            .music-player.show, .progress-tracker.show, .days-counter.show {
                 position: static;
                 margin: 15px auto;
                 max-width: 300px;
@@ -1225,7 +1239,7 @@
 
         <!-- Welcome Screen -->
         <div class="screen" id="welcome">
-            <h1>💝 Welcome, My Lovely Kavya! 💝</h1>
+            <h1>💝 Welcome, My Beautiful Kavya! 💝</h1>
             <p style="font-size: 16px; margin: 25px 0;">Happy Valentine's Day, my love! ❤️</p>
             <p>I've prepared something incredibly special for you today. This isn't just a website - it's a love letter written in code, a journey through the depths of my heart, and a celebration of the most beautiful thing in my life: US.</p>
             <p>Every click, every animation, every word you read here was crafted with love, thinking of your smile, your laughter, and the way you make my world complete.</p>
@@ -1660,6 +1674,11 @@ I want you to know that...
             initProgressDots();
             calculateDaysTogether();
             viewedScreens.add('entry');
+            
+            // Show the music player, progress tracker, and days counter on initial load (entry screen)
+            document.querySelector('.music-player').classList.add('show');
+            document.querySelector('.progress-tracker').classList.add('show');
+            document.querySelector('.days-counter').classList.add('show');
         };
 
         // Create floating hearts
@@ -1772,6 +1791,23 @@ I want you to know that...
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
+            
+            // Show/hide the music player, progress tracker, and days counter based on screen
+            const musicPlayer = document.querySelector('.music-player');
+            const progressTracker = document.querySelector('.progress-tracker');
+            const daysCounter = document.querySelector('.days-counter');
+            
+            if (screenId === 'entry') {
+                // Show these elements only on entry screen
+                musicPlayer.classList.add('show');
+                progressTracker.classList.add('show');
+                daysCounter.classList.add('show');
+            } else {
+                // Hide these elements on all other screens
+                musicPlayer.classList.remove('show');
+                progressTracker.classList.remove('show');
+                daysCounter.classList.remove('show');
+            }
             
             // Show requested screen
             const screen = document.getElementById(screenId);
